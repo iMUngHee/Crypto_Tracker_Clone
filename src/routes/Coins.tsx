@@ -1,31 +1,49 @@
-import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet-async";
 import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import { fetchCoins } from "../api";
+import ToggleSwitch from "../toggleSwitch";
 
 const Container = styled.div`
-  padding: 0px 10px;
-  max-width: 480px;
+  padding: 200px 50px 80px;
+  width: 100%;
+  height: 100%;
   margin: 0 auto;
-`;
-
-const Header = styled.header`
-  height: 10vh;
   display: flex;
   justify-content: center;
   align-items: center;
 `;
 
-const CoinList = styled.ul``;
+const Header = styled.header`
+  height: 10vh;
+  position: absolute;
+  top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
 
-const Coin = styled.li`
-  background-color: white;
+const CoinList = styled.div`
+  width: 1200px;
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  border-radius: 5px;
+`;
+
+const Coin = styled.div`
+  width: 100%;
+  height: 260px;
+  font-size: 30px;
+  font-weight: bold;
+  background-color: ${(props) => props.theme.textColor};
   color: ${(props) => props.theme.bgColor};
   margin-bottom: 10px;
   border-radius: 15px;
   a {
     display: flex;
+    flex-direction: column;
     align-items: center;
     padding: 20px;
     transition: color 0.2s ease-in;
@@ -39,7 +57,8 @@ const Coin = styled.li`
 
 const Title = styled.h1`
   font-size: 48px;
-  color: ${(props) => props.theme.accentColor};
+  letter-spacing: 10px;
+  color: ${(props) => props.theme.textColor};
 `;
 
 const Loader = styled.span`
@@ -48,9 +67,8 @@ const Loader = styled.span`
 `;
 
 const Img = styled.img`
-  width: 35px;
-  height: 35px;
-  margin-right: 10px;
+  width: 200px;
+  height: 200px;
 `;
 
 interface ICoin {
@@ -68,13 +86,12 @@ const Coins = () => {
   return (
     <Container>
       <Helmet>
-        <title>
-          코인
-        </title>
+        <title>코인</title>
       </Helmet>
       <Header>
-        <Title>코인</Title>
+        <Title>COIN</Title>
       </Header>
+      <ToggleSwitch />
       {isLoading ? (
         <Loader>Loading...</Loader>
       ) : (
@@ -86,7 +103,7 @@ const Coins = () => {
                   alt="ico"
                   src={`https://cryptoicon-api.vercel.app/api/icon/${coin.symbol.toLowerCase()}`}
                 />
-                {coin.name} &rarr;
+                {coin.name}
               </Link>
             </Coin>
           ))}

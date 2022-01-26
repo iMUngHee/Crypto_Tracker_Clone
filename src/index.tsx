@@ -1,18 +1,20 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import { ThemeProvider } from "styled-components";
-import { darkTheme, lightTheme } from "./theme";
 import App from "./App";
 import { QueryClient, QueryClientProvider } from "react-query";
+import { HelmetProvider } from "react-helmet-async";
+import { ThemeContextProvider } from "./themeContext";
 
 const queryClient = new QueryClient();
 
 ReactDOM.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
-      <ThemeProvider theme={lightTheme}>
-        <App />
-      </ThemeProvider>
+      <HelmetProvider>
+        <ThemeContextProvider>
+          <App />
+        </ThemeContextProvider>
+      </HelmetProvider>
     </QueryClientProvider>
   </React.StrictMode>,
   document.getElementById("root")

@@ -24,69 +24,63 @@ const Chart = () => {
     ["ohlcv", coinId],
     () => fetchCoinHistory(coinId),
     {
-      refetchInterval: 5000,
+      refetchInterval: 10000,
     }
   );
   return (
-    <div>
+    <div style={{color: "black"}}>
       {isLoading ? (
         "Loading chart..."
       ) : (
         <ApexChart
-          type="line"
+          type="candlestick"
           series={[
             {
-              name: "price",
-              data: data?.map((price) => price.close),
+              data: data?.map((price) => ({
+                x: price.time_close.slice(2, 10),
+                y: [
+                  price.open.toFixed(2),
+                  price.high.toFixed(2),
+                  price.low.toFixed(2),
+                  price.close.toFixed(2),
+                ],
+              })),
             },
           ]}
           options={{
             chart: {
-              height: 300,
-              width: 500,
+              type: "candlestick",
               toolbar: {
                 show: false,
               },
               background: "transparent",
             },
-            theme: {
-              mode: "dark",
-            },
-            grid: {
-              show: false,
-            },
             stroke: {
               curve: "smooth",
-              width: 3,
+              width: 1,
             },
-            yaxis: {
+            tooltip: {
+              
+            },
+            grid: {
               show: false,
             },
             xaxis: {
               labels: {
                 show: false,
               },
-              axisTicks: {
-                show: false,
-              },
               axisBorder: {
                 show: false,
               },
-              type: "datetime",
-              categories: data?.map((price) => price.time_close),
-            },
-            fill: {
-              type: "gradient",
-              gradient: {
-                gradientToColors: ["#0be881"],
-                stops: [0, 100],
+              axisTicks: {
+                show: false,
               },
             },
-            colors: ["#0fbcf9"],
-            tooltip: {
-              y: {
-                formatter: (value) => `$ ${value.toFixed(2)}`,
-              },
+            yaxis: {
+              show: false,
+              tooltip: {
+                enabled: true
+              }
             },
           }}
         />
