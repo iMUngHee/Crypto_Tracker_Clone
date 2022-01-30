@@ -4,7 +4,6 @@ import { Link, useMatch, useNavigate } from "react-router-dom";
 import { Outlet, useLocation, useParams } from "react-router-dom";
 import styled from "styled-components";
 import { fetchCoinInfo, fetchCoinTickers } from "../api";
-import ToggleSwitch from "../toggleSwitch";
 
 const Container = styled.div`
   padding: 0px 10px;
@@ -175,7 +174,6 @@ const Coin = () => {
         <Title>
           {state?.name ? state.name : loading ? "Loading..." : infoData?.name}
         </Title>
-        <ToggleSwitch />
       </Header>
       {loading ? (
         <Loader>Loading...</Loader>
